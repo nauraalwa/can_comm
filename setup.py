@@ -24,7 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'can_translator = can_comm.can_translator:main'
+            'can_translator = can_comm.can_translator:main',
             'lidar_test = can_comm.lidar_test:main'
         ],
     },
