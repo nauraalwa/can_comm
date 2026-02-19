@@ -20,7 +20,7 @@ class LidarTest(Node):
             self.lidar_callback,
             10)
 
-        self.publish = self.create_publisher(Twist, '/cmd_vel', 10) #recheck cmd_vel
+        self.publish = self.create_publisher(Twist, '/cmd_vel', 10)
 
         self.target_distance_to_wall = 0.5 #how far from wall should the robot be
         self.kp = 1.0
@@ -30,7 +30,7 @@ class LidarTest(Node):
         angles = np.arange(msg.angle_min, msg.angle_max, msg.angle_increment)
         ranges = np.array(msg.ranges)
 
-        valid_mask = np.isfinite(ranges) & (ranges > msg.range_min) & (ranges < msg.range.max)
+        valid_mask = np.isfinite(ranges) & (ranges > msg.range_min) & (ranges < msg.range_max)
         ranges = ranges[valid_mask]
         angles = angles[valid_mask]
 
@@ -48,7 +48,7 @@ class LidarTest(Node):
             )
         
         for i, wall in enumerate(walls):
-            self.get_logger.info(
+            self.get_logger().info(
                 f"  Wall {i+1}: Angle={wall['angle']:.2f} degrees"
             )
 

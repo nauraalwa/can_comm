@@ -2,9 +2,7 @@ import numpy as np
 from skimage.measure import LineModelND, ransac, CircleModel
 from sklearn.cluster import DBSCAN
 import pandas as pd
-from pandas import DataFrame
 import os
-import csv
 import math
 from typing import List
 from sklearn.cluster import DBSCAN
@@ -236,11 +234,11 @@ def v2_both_poles_and_walls(x: np.ndarray, y: np.ndarray, raw_ranges: np.ndarray
 
     #main pipeline
     valid_mask = y > -0.6
-    y = x[valid_mask]
-    x = y[valid_mask]
+    y_filtered = x[valid_mask]
+    x_filtered = y[valid_mask]
     raw = raw_ranges[valid_mask]
 
-    data = np.column_stack([x, y])
+    data = np.column_stack([x_filtered, y_filtered])
 
     segments = segment_jumps(raw)
 
