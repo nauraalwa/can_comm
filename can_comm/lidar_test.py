@@ -4,6 +4,7 @@ from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 import numpy as np
 from ransac import v2_both_poles_and_walls
+import sys
 
 """
 clean_data
@@ -51,13 +52,20 @@ class LidarTest(Node):
             self.get_logger().info(
                 f"  Wall {i+1}: Angle={wall['angle']:.2f} degrees"
             )
+            
+        self.get_logger().info("Successfully ran once. Shutting down now.")
+        sys.exit()
 
 def main(args=None):
     rclpy.init(args=args)
     lidar_subscriber = LidarTest()
-    rclpy.spin_once(lidar_subscriber)
-    lidar_subscriber.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(lidar_subscriber) 
+    except SystemExit:
+        lidar_subscriber.get_logger().info("Node closed cleanly.")
+    finally:
+        lidar_subscriber.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
